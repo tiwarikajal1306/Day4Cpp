@@ -71,6 +71,50 @@ void quickSort( int a[], int low, int high )
 	}
 }
 
+void merge( int *a, int low, int high, int mid )
+{
+    int i, j, k, c[ 50 ];
+    i = low;
+    k = low;
+    j = mid + 1;
+    while ( i <= mid && j <= high ) {
+        if ( a[i] < a[j] ) {
+            c[k] = a[i];
+            k++;
+            i++;
+        }
+        else  {
+            c[k] = a[j];
+            k++;
+            j++;
+        }
+    }
+    while ( i <= mid ) {
+        c[k] = a[i];
+        k++;
+        i++;
+    }
+    while ( j <= high ) {
+        c[k] = a[j];
+        k++;
+        j++;
+    }
+    for ( i = low; i < k; i++ )  {
+        a[i] = c[i];
+    }
+}
+
+void mergeSort( int *a, int low, int high )
+{
+	int mid;
+	if ( low < high ) {
+		mid=( low + high ) / 2;
+        	mergeSort( a, low, mid );
+        	mergeSort( a, mid + 1, high );
+		merge( a, low, high, mid );
+	}
+}
+
 int main()
 {
 	int choice;
@@ -96,8 +140,17 @@ int main()
                 displayList(array);
 		cout << endl;
 		int n = sizeof( array ) / sizeof( array[0] );
-		//int n = 10;
-		quickSort( array, 0, n-1 );
+		quickSort( array, 0, n - 1 );
+		cout << endl;
+		cout <<"Sorted Element List ...\n";
+                displayList(array);
+	}
+	else if( choice == 4 ) {
+		cout << "Input list ...\n";
+                displayList(array);
+                cout << endl;
+                int n = sizeof( array ) / sizeof( array[0] );
+		mergeSort( array, 0, n - 1 );
 		cout << endl;
 		cout <<"Sorted Element List ...\n";
                 displayList(array);
